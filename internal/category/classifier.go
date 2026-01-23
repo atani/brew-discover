@@ -133,7 +133,7 @@ func Classify(name, desc string) Category {
 	}
 
 	// Find highest scoring category
-	var bestCat Category = CategoryOther
+	bestCat := CategoryOther
 	bestScore := 0
 	for cat, score := range scores {
 		if score > bestScore {

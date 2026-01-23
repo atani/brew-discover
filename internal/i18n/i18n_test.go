@@ -1,7 +1,6 @@
 package i18n
 
 import (
-	"os"
 	"testing"
 )
 
@@ -84,25 +83,19 @@ func TestT_UnknownKey(t *testing.T) {
 }
 
 func TestDetectLanguage_FromEnv(t *testing.T) {
-	// Save original
-	origLang := os.Getenv("LANG")
-	origBrewLang := os.Getenv("BREW_DISCOVER_LANG")
-	defer func() {
-		os.Setenv("LANG", origLang)
-		os.Setenv("BREW_DISCOVER_LANG", origBrewLang)
-	}()
-
 	// Test BREW_DISCOVER_LANG takes priority
-	os.Setenv("BREW_DISCOVER_LANG", "ja")
-	os.Setenv("LANG", "en_US.UTF-8")
+	t.Setenv("BREW_DISCOVER_LANG", "ja")
+	t.Setenv("LANG", "en_US.UTF-8")
 	DetectLanguage()
 	if got := GetLanguage(); got != "ja" {
 		t.Errorf("DetectLanguage with BREW_DISCOVER_LANG=ja: got %q, want %q", got, "ja")
 	}
+}
 
+func TestDetectLanguage_FallbackToLang(t *testing.T) {
 	// Test fallback to LANG
-	os.Unsetenv("BREW_DISCOVER_LANG")
-	os.Setenv("LANG", "ja_JP.UTF-8")
+	t.Setenv("BREW_DISCOVER_LANG", "")
+	t.Setenv("LANG", "ja_JP.UTF-8")
 	DetectLanguage()
 	if got := GetLanguage(); got != "ja" {
 		t.Errorf("DetectLanguage with LANG=ja_JP.UTF-8: got %q, want %q", got, "ja")
