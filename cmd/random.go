@@ -8,7 +8,6 @@ import (
 	"os"
 	"os/exec"
 	"strings"
-	"time"
 
 	"github.com/atani/brew-discover/internal/api"
 	"github.com/atani/brew-discover/internal/cache"
@@ -48,8 +47,6 @@ func runRandom(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return fmt.Errorf("failed to initialize cache: %w", err)
 	}
-
-	rand.Seed(time.Now().UnixNano())
 
 	var items []api.AnalyticsItem
 	var formulae map[string]*api.Formula
@@ -192,7 +189,7 @@ func promptInstall(name string, isCask bool) {
 		}
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
-		cmd.Run()
+		_ = cmd.Run()
 	}
 }
 
@@ -211,7 +208,7 @@ func getFormulaAnalytics(client *api.Client, c *cache.Cache) (*api.AnalyticsResp
 	}
 
 	if data, err := json.Marshal(analytics); err == nil {
-		c.Set(cacheKey, data)
+		_ = c.Set(cacheKey, data)
 	}
 
 	return analytics, nil
@@ -232,7 +229,7 @@ func getCaskAnalytics(client *api.Client, c *cache.Cache) (*api.AnalyticsRespons
 	}
 
 	if data, err := json.Marshal(analytics); err == nil {
-		c.Set(cacheKey, data)
+		_ = c.Set(cacheKey, data)
 	}
 
 	return analytics, nil

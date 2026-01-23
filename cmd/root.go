@@ -8,7 +8,6 @@ import (
 )
 
 var (
-	version string
 	lang    string
 	refresh bool
 )
@@ -33,7 +32,6 @@ func Execute() {
 }
 
 func SetVersion(v string) {
-	version = v
 	rootCmd.Version = v
 }
 
