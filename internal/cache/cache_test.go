@@ -86,8 +86,8 @@ func TestCache_Clear(t *testing.T) {
 	cache := &Cache{dir: tmpDir}
 
 	// Create some cache files
-	cache.Set("test1.json", []byte(`{"test": 1}`))
-	cache.Set("test2.json", []byte(`{"test": 2}`))
+	_ = cache.Set("test1.json", []byte(`{"test": 1}`))
+	_ = cache.Set("test2.json", []byte(`{"test": 2}`))
 
 	err = cache.Clear()
 	if err != nil {

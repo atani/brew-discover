@@ -61,7 +61,7 @@ func runTop(cmd *cobra.Command, args []string) error {
 		}
 
 		if data, err := json.Marshal(analytics); err == nil {
-			c.Set(cacheKey, data)
+			_ = c.Set(cacheKey, data)
 		}
 
 	gotCaskAnalytics:
@@ -87,7 +87,7 @@ func runTop(cmd *cobra.Command, args []string) error {
 		}
 
 		if data, err := json.Marshal(analytics); err == nil {
-			c.Set(cacheKey, data)
+			_ = c.Set(cacheKey, data)
 		}
 
 	gotFormulaAnalytics:
@@ -155,7 +155,7 @@ func getFormulaMap(client *api.Client, c *cache.Cache) (map[string]*api.Formula,
 			return nil, err
 		}
 
-		c.Set(cache.FormulaeFile, data)
+		_ = c.Set(cache.FormulaeFile, data)
 	}
 
 buildMap:
@@ -185,7 +185,7 @@ func getCaskMap(client *api.Client, c *cache.Cache) (map[string]*api.Cask, error
 			return nil, err
 		}
 
-		c.Set(cache.CasksFile, data)
+		_ = c.Set(cache.CasksFile, data)
 	}
 
 buildMap:

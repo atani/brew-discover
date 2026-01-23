@@ -17,7 +17,7 @@ func TestClient_get(t *testing.T) {
 
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(expected)
+		_ = json.NewEncoder(w).Encode(expected)
 	}))
 	defer server.Close()
 
@@ -53,7 +53,7 @@ func TestClient_getBytes(t *testing.T) {
 	expected := []byte(`{"test": "data"}`)
 
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Write(expected)
+		_, _ = w.Write(expected)
 	}))
 	defer server.Close()
 
